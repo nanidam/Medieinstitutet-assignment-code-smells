@@ -4,15 +4,10 @@
   dessa hopplängder.
   */
 
-function getLength(jumpings: number[]): number {
-  let totalNumber = 0;
-
-  totalNumber = jumpings.reduce(
+const getLength = (jumpings: number[]): number =>
+  jumpings.reduce(
     (jumpDistanceSoFar, currentJump) => jumpDistanceSoFar + currentJump
   );
-
-  return totalNumber;
-}
 
 /*
   2. I detta exempel har vi fokuserat på if-statements. Se om du kan göra exemplet bättre!
@@ -27,20 +22,11 @@ class Student {
 }
 
 function getStudentStatus(student: Student): string {
-  student.passed =
-    student.name == "Sebastian"
-      ? student.handedInOnTime
-        ? true
-        : false
-      : false;
-
-  if (student.passed) {
-    return "VG";
-  } else {
-    return "IG";
+  if (student.name == "Sebastian") {
+    return student.handedInOnTime ? "VG" : "IG";
   }
+  return "IG";
 }
-
 /*
   3. Variabelnamn är viktiga. Kika igenom följande kod och gör om och rätt.
   Det finns flera code smells att identifiera här. Vissa är lurigare än andra.
@@ -50,46 +36,100 @@ class Temp {
   constructor(public q: string, public where: Date, public v: number) {}
 }
 
-function averageWeeklyTemperature(heights: Temp[]) {
-  let r = 0;
+// function averageWeeklyTemperature(heights: Temp[]) {
+//   let r = 0;
 
-  for (let who = 0; who < heights.length; who++) {
-    if (heights[who].q === "Stockholm") {
-      if (heights[who].where.getTime() > Date.now() - 604800000) {
-        r += heights[who].v;
-      }
-    }
-  }
+//   for (let who = 0; who < heights.length; who++) {
+//     if (heights[who].q === "Stockholm") {
+//       if (heights[who].where.getTime() > Date.now() - 604800000) {
+//         r += heights[who].v;
+//       }
+//     }
+//   }
 
-  return r / 7;
+//   return r / 7;
+// }
+
+class Temperature {
+  constructor(public place: string, public date: Date, public value: number) {}
 }
+
+// function averageWeeklyTemperature(temperatures: Temperature[]) {
+//   let result = 0;
+//   const ONE_WEEK_IN_MILLISECONDS = 604800000;
+//   const DAYS_IN_WEEK = 7;
+
+//   for (let i = 0; i < temperatures.length; i++) {
+//     if (temperatures[i].place === "Stockholm") {
+//       if (
+//         temperatures[i].date.getTime() >
+//         Date.now() - ONE_WEEK_IN_MILLISECONDS
+//       ) {
+//         result += temperatures[i].value;
+//       }
+//     }
+//   }
+
+//   return result / DAYS_IN_WEEK;
+// }
+
+function averageWeeklyTemperature(temperatures: Temperature[]) {
+  const ONE_WEEK_IN_MILLISECONDS = 604800000;
+  const DAYS_IN_WEEK = 7;
+
+  const stockholmTemperatures = temperatures.filter(
+    (temp) =>
+      temp.place === "Stockholm" &&
+      temp.date.getTime() > Date.now() - ONE_WEEK_IN_MILLISECONDS
+  );
+
+  const sumOfTemperatures = stockholmTemperatures.reduce(
+    (total, temp) => total + temp.value,
+    0
+  );
+
+  return sumOfTemperatures / DAYS_IN_WEEK;
+}
+
+const test = [
+  new Temperature("Stockholm", new Date(2023, 1, 13), 5),
+  new Temperature("Stockholm", new Date(2023, 1, 14), 10),
+  new Temperature("Stockholm", new Date(2023, 1, 15), 15),
+  new Temperature("Stockholm", new Date(2023, 1, 16), 20),
+  new Temperature("Stockholm", new Date(2023, 1, 17), 25),
+  new Temperature("Stockholm", new Date(2023, 1, 18), 30),
+  new Temperature("Stockholm", new Date(2023, 1, 19), 35),
+];
+
+// console.log(averageWeeklyTemperature(test)); // Output: 20
 
 /*
   4. Följande funktion kommer att presentera ett objekt i dom:en. 
   Se om du kan göra det bättre. Inte bara presentationen räknas, även strukturer.
   */
 
-function showProduct(
-  name: string,
-  price: number,
-  amount: number,
-  description: string,
-  image: string,
-  parent: HTMLElement
-) {
-  let container = document.createElement("div");
-  let title = document.createElement("h4");
-  let pris = document.createElement("strong");
-  let imageTag = document.createElement("img");
+class Product {
+  constructor(
+    public name: string,
+    public price: number,
+    public amount: number,
+    public description: string,
+    public image: string,
+    public parent: HTMLElement
+  ) {}
+}
 
-  title.innerHTML = name;
-  pris.innerHTML = price.toString();
-  imageTag.src = image;
+function showProduct1(product: Product) {
+  const container = document.createElement("div");
+  container.innerHTML = `
+    <div>
+      <h4>${product.name}</h4>
+      <strong>${product.price}</strong>
+      <img src="${product.image}">
+    </div>
+    `;
 
-  container.appendChild(title);
-  container.appendChild(imageTag);
-  container.appendChild(pris);
-  parent.appendChild(container);
+  product.parent.appendChild(container);
 }
 
 /*
@@ -120,21 +160,38 @@ function presentStudents(students: Student[]) {
   }
 }
 
+// @TODO: should be teriary
+
+// function presentStudents1(students: Student[]) {
+
+//   for (const student of students) {
+//     if (student.handedInOnTime) {
+//       let container = document.createElement("div");
+//       container.innerHTML = `
+//       <div>
+//         <input checkbox="true"></input>
+//         <ul id="passedstudents"></ul>
+//       </div>
+//       `;
+//     } else {
+//       let container = document.createElement("div");
+//       container.innerHTML = `
+//       <div>
+//         <input checkbox="false"></input>
+//         <ul id="failedstudents"></ul>
+//       </div>
+//       `;
+//     }
+//   }
+// }
 /*
   6. Skriv en funktion som skall slå ihop följande texter på ett bra sätt:
   Lorem, ipsum, dolor, sit, amet
   Exemplet under löser problemet, men inte speciellt bra. Hur kan man göra istället?
   */
-function concatenateStrings() {
-  let result = "";
-  result += "Lorem";
-  result += "ipsum";
-  result += "dolor";
-  result += "sit";
-  result += "amet";
 
-  return result;
-}
+const concatenateStrings = () =>
+  ["Lorem", "ipsum", "dolor", "sit", "amet"].join("");
 
 /* 
 7. Denna funktion skall kontrollera att en användare är över 20 år och göra någonting.
@@ -142,23 +199,26 @@ function concatenateStrings() {
     fler och fler parametrar behöver läggas till? T.ex. avatar eller adress. Hitta en bättre
     lösning som är hållbar och skalar bättre. 
 */
-function createUser(
-  name: string,
-  birthday: Date,
-  email: string,
-  password: string
-) {
-  // Validation
 
-  let ageDiff = Date.now() - birthday.getTime();
+interface IUser {
+  name: string;
+  birthday: Date;
+  email: string;
+  password: string;
+}
+
+function createUser(user: IUser) {
+  // Validation
+  const epochYear: number = 1970;
+
+  let ageDiff = Date.now() - user.birthday.getTime();
   let ageDate = new Date(ageDiff);
-  let userAge = Math.abs(ageDate.getUTCFullYear() - 1970);
+  let userAge = Math.abs(ageDate.getUTCFullYear() - epochYear);
 
   console.log(userAge);
 
-  if (!(userAge < 20)) {
+  if (userAge > 20) {
     // Logik för att skapa en användare
-  } else {
-    return "Du är under 20 år";
   }
+  return "Du är under 20 år";
 }

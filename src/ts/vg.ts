@@ -24,49 +24,92 @@ export class Product {
   }
 }
 
+const frudd = [
+  new Product(3, "asfwe", ["imgurl"], 29, "testing description"),
+  new Product(7, "uytitf", ["imgurl"], 412, "testing description"),
+  new Product(2, "ewcvh", ["imgurl"], 83, "testing description"),
+];
+
 export function sortProductsBy(sort: Sort, products: Product[]): Product[] {
   let copiedList: Product[] = [];
   products.forEach((product) => copiedList.push(product));
 
   let sortedList: Product[] = [];
-  if (sort === Sort.PRICE_ASCENDING) {
-    sortedList = sortList("Price", copiedList);
-    sortedList.reverse();
-  } else if (sort === Sort.PRICE_DECENDING) {
-    sortedList = sortList("Price", copiedList);
-  } else if (sort === Sort.NAME_ALPHABETIC) {
-    sortedList = sortList("Name", copiedList);
-  } else if (sort === Sort.NAME_ALPHABETIC_REVERSE) {
-    sortedList = sortList("Name", copiedList);
-    sortedList.reverse();
-  }
 
+  // if (sort === Sort.PRICE_ASCENDING) {
+  //   sortedList = sortList("Price", copiedList);
+  //   sortedList.reverse();
+  // } else if (sort === Sort.PRICE_DECENDING) {
+  //   sortedList = sortList("Price", copiedList);
+  // } else if (sort === Sort.NAME_ALPHABETIC) {
+  //   sortedList = sortList("Name", copiedList);
+  // } else if (sort === Sort.NAME_ALPHABETIC_REVERSE) {
+  //   sortedList = sortList("Name", copiedList);
+  //   sortedList.reverse();
+  // }
+
+  // return sortedList;
+
+  switch (sort) {
+    case Sort.PRICE_ASCENDING:
+      sortedList = sortList("Price", copiedList).reverse();
+      break;
+    case Sort.PRICE_DECENDING:
+      sortedList = sortList("Price", copiedList);
+      break;
+    case Sort.NAME_ALPHABETIC:
+      sortedList = sortList("Name", copiedList);
+      break;
+    case Sort.NAME_ALPHABETIC_REVERSE:
+      sortedList = sortList("Name", copiedList).reverse();
+      break;
+  }
   return sortedList;
 }
 
-function sortList(whichAttribute: string, products: Product[]): Product[] {
-  return products.sort((p1, p2) => {
+function sortList2(whichAttribute: string, products: Product[]): Product[] {
+  return products.sort((firstProduct, secondProduct) => {
     if (whichAttribute === "Price") {
-      if (p1.price < p2.price) {
+      if (firstProduct.price < secondProduct.price) {
         return 1;
-      } else if (p1.price > p2.price) {
+      } else if (firstProduct.price > secondProduct.price) {
         return -1;
       }
       return 0;
     } else {
-      if (p1.name < p2.name) {
+      if (firstProduct.name < secondProduct.name) {
         return 1;
-      } else if (p1.name > p2.name) {
+      } else if (firstProduct.name > secondProduct.name) {
         return -1;
       }
       return 0;
     }
   });
 }
+function sortList(whichAttribute: string, products: Product[]): Product[] {
+  return products.sort((firstProduct, secondProduct) => {
+    if (whichAttribute === "Price") {
+      if (firstProduct.price < secondProduct.price) return 1;
+      if (firstProduct.price > secondProduct.price) return -1;
+
+      return 0;
+    }
+    if (firstProduct.name < secondProduct.name) return 1;
+    if (firstProduct.name > secondProduct.name) return -1;
+
+    return 0;
+  });
+}
+
+// console.table(sortProductsBy(Sort.NAME_ALPHABETIC, frudd));
+// console.table(sortProductsBy(Sort.NAME_ALPHABETIC_REVERSE, frudd));
+// console.table(sortProductsBy(Sort.PRICE_ASCENDING, frudd));
+// console.table(sortProductsBy(Sort.PRICE_DECENDING, frudd));
 
 /*
   2. Refaktorera funktionen createProductHtml :)
   */
+
 class Cart {
   addToCart(i: number) {}
 }
@@ -74,6 +117,7 @@ export let cartList = JSON.parse(localStorage.getItem("savedCartList") || "[]");
 export let productList = JSON.parse(localStorage.getItem("savedList") || "[]");
 
 export function createProductHtml() {
+  //TODO: part 1
   let quantity = 0;
   for (let i = 0; i < cartList.length; i++) {
     quantity += cartList[i].quantity;
@@ -83,6 +127,7 @@ export function createProductHtml() {
   ) as HTMLElement;
   floatingCart.innerHTML = "" + quantity;
 
+  //TODO: part 2
   for (let i = 0; i < productList.length; i++) {
     let dogproduct: HTMLDivElement = document.createElement("div");
     let dogImgContainer: HTMLDivElement = document.createElement("div");
@@ -138,6 +183,7 @@ export function createProductHtml() {
       cart.addToCart(i);
     });
 
+    // TODO: part 3
     if (productList[i].category === "sassy") {
       let cat1: HTMLElement = document.getElementById("sassy") as HTMLElement;
       dogproduct.className = "dogproduct";
@@ -166,11 +212,11 @@ export function createProductHtml() {
       cat5.appendChild(dogproduct);
     }
   }
+
   let listastext = JSON.stringify(productList);
   localStorage.setItem("savedList", listastext);
   sessionStorage.clear();
 }
-
 /*
   3. Refaktorera funktionen getfromstorage
   */
