@@ -139,51 +139,47 @@ function showProduct1(product: Product) {
 function presentStudents(students: Student[]) {
   for (const student of students) {
     if (student.handedInOnTime) {
+      let listOfStudents = document.querySelector("ul#passedstudents");
       let container = document.createElement("div");
       let checkbox = document.createElement("input");
       checkbox.type = "checkbox";
       checkbox.checked = true;
 
       container.appendChild(checkbox);
-      let listOfStudents = document.querySelector("ul#passedstudents");
       listOfStudents?.appendChild(container);
     } else {
+      let listOfStudents = document.querySelector("ul#failedstudents");
       let container = document.createElement("div");
       let checkbox = document.createElement("input");
       checkbox.type = "checkbox";
       checkbox.checked = false;
 
       container.appendChild(checkbox);
-      let listOfStudents = document.querySelector("ul#failedstudents");
       listOfStudents?.appendChild(container);
     }
   }
 }
 
-// @TODO: should be teriary
+function presentStudents1(students: Student[]) {
+  for (const student of students) {
+    let container = document.createElement("div");
+    let checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
 
-// function presentStudents1(students: Student[]) {
+    if (student.handedInOnTime) {
+      let listOfStudents = document.querySelector("ul#passedstudents");
+      checkbox.checked = true;
+      container.appendChild(checkbox);
+      listOfStudents?.appendChild(container);
+    } else {
+      let listOfStudents = document.querySelector("ul#failedstudents");
+      checkbox.checked = false;
+      container.appendChild(checkbox);
+      listOfStudents?.appendChild(container);
+    }
+  }
+}
 
-//   for (const student of students) {
-//     if (student.handedInOnTime) {
-//       let container = document.createElement("div");
-//       container.innerHTML = `
-//       <div>
-//         <input checkbox="true"></input>
-//         <ul id="passedstudents"></ul>
-//       </div>
-//       `;
-//     } else {
-//       let container = document.createElement("div");
-//       container.innerHTML = `
-//       <div>
-//         <input checkbox="false"></input>
-//         <ul id="failedstudents"></ul>
-//       </div>
-//       `;
-//     }
-//   }
-// }
 /*
   6. Skriv en funktion som skall slå ihop följande texter på ett bra sätt:
   Lorem, ipsum, dolor, sit, amet
