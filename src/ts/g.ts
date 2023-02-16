@@ -208,9 +208,9 @@ interface IUser {
 }
 
 function createUser(user: IUser) {
-  // Validation
   const epochYear: number = 1970;
 
+  // Validation
   let ageDiff = Date.now() - user.birthday.getTime();
   let ageDate = new Date(ageDiff);
   let userAge = Math.abs(ageDate.getUTCFullYear() - epochYear);
