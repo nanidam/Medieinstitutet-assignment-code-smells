@@ -187,7 +187,7 @@ function getfromstorage() {
   ) as HTMLDivElement;
   let amounttext: HTMLTableCellElement = document.createElement("th");
   amountcontainer.appendChild(amounttext);
-  amounttext.innerHTML = "amount:";
+  amounttext.innerHTML = `amount:`;
 
   let titlecontainer = document.getElementById(
     "title-container"
@@ -199,14 +199,14 @@ function getfromstorage() {
   ) as HTMLTableRowElement;
   let qttext: HTMLTableCellElement = document.createElement("th");
   productquantity.appendChild(qttext);
-  qttext.innerHTML = "change quantity:";
+  qttext.innerHTML = `change quantity:`;
 
   let checkkouttotal2 = document.getElementById(
     "title-total"
   ) as HTMLTableCellElement;
   let totaltext: HTMLTableCellElement = document.createElement("th");
   checkkouttotal2.appendChild(totaltext);
-  totaltext.innerHTML = "total:";
+  totaltext.innerHTML = `total:`;
 
   renderProductHtml();
 
