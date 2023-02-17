@@ -226,24 +226,38 @@ function getfromstorage() {
 
   function renderProductHtml() {
     for (let i: number = 0; i < astext.length; i++) {
-      titlecontainer.innerHTML = `
-        <th class="hej">${astext[i].name}</th>
-        `;
+      const productt = document.createElement("th");
+      titlecontainer.appendChild(productt);
+      productt.innerHTML = `${astext[i].name}`;
+      productt.className = `hej`;
 
-      amountcontainer.innerHTML = `
-        <th class="hej">x${astext[i].amount}</th>
-        `;
+      const amountt: HTMLTableCellElement = document.createElement("th");
+      amountcontainer.appendChild(amountt);
+      amountt.innerHTML = `x${astext[i].amount}`;
+      amountt.className = `hej`;
 
-      productquantity.innerHTML = `
-        <th class="hej">
-          <button class="plusbtn">
-            <i class="fas fa-minus"></i>
-          </button   
-          <button class="minusbtn">
-            <i class="fas fa-plus"></i>       
-          </button>   
-        </th>
-        `;
+      const amountqt: HTMLTableCellElement = document.createElement("th");
+      productquantity.appendChild(amountqt);
+      const amountplusbtn = document.createElement(
+        "button"
+      ) as HTMLButtonElement;
+      amountqt.appendChild(amountplusbtn);
+      amountqt.className = `hej`;
+
+      const icon: HTMLSpanElement = document.createElement("i");
+      amountplusbtn.appendChild(icon);
+      icon.className = `fas fa-minus`;
+      amountplusbtn.className = `plusbtn`;
+
+      const icon2: HTMLSpanElement = document.createElement("i");
+      icon2.className = `fas fa-plus`;
+
+      const amountminusbtn = document.createElement(
+        "button"
+      ) as HTMLButtonElement;
+      amountqt.appendChild(amountminusbtn);
+      amountminusbtn.appendChild(icon2);
+      amountminusbtn.className = `minusbtn`;
     }
   }
 }
