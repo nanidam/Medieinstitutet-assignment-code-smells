@@ -120,42 +120,31 @@ function presentStudents1(students: Student[]) {
     checkbox.type = "checkbox";
     checkbox.checked = false;
 
-    if (student.handedInOnTime) {
-      let listOfStudents = document.querySelector("ul#passedstudents");
-      checkbox.checked = true;
-      container.appendChild(checkbox);
-      listOfStudents?.appendChild(container);
-    } else {
-      let listOfStudents = document.querySelector("ul#failedstudents");
-      container.appendChild(checkbox);
-      listOfStudents?.appendChild(container);
-    }
+    student.handedInOnTime
+      ? passedStudents(checkbox, container)
+      : failedStudents(container, checkbox);
   }
-}
 
-function presentStudents3(students: Student[]) {
-  for (const student of students) {
-    const container = document.createElement("div");
-    const checkbox = document.createElement("input");
-    checkbox.type = "checkbox";
-    checkbox.checked = student.handedInOnTime;
-
-    const listOfStudents = student.handedInOnTime
-      ? document.querySelector("ul#passedstudents")
-      : document.querySelector("ul#failedstudents");
-
+  function passedStudents(
+    checkbox: HTMLInputElement,
+    container: HTMLDivElement
+  ) {
+    let listOfStudents = document.querySelector("ul#passedstudents");
+    checkbox.checked = true;
     container.appendChild(checkbox);
     listOfStudents?.appendChild(container);
-    console.log(listOfStudents);
+  }
+
+  function failedStudents(
+    container: HTMLDivElement,
+    checkbox: HTMLInputElement
+  ) {
+    let listOfStudents = document.querySelector("ul#failedstudents");
+    container.appendChild(checkbox);
+    listOfStudents?.appendChild(container);
   }
 }
 
-const frudds = [
-  new Student("frudd", true, true),
-  new Student("frudd", false, true),
-  new Student("frudd", true, true),
-];
-console.log(presentStudents3(frudds));
 /*
   6. Skriv en funktion som skall slå ihop följande texter på ett bra sätt:
   Lorem, ipsum, dolor, sit, amet

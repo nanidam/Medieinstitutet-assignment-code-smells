@@ -24,31 +24,11 @@ export class Product {
   }
 }
 
-const frudd = [
-  new Product(3, "asfwe", ["imgurl"], 29, "testing description"),
-  new Product(7, "uytitf", ["imgurl"], 412, "testing description"),
-  new Product(2, "ewcvh", ["imgurl"], 83, "testing description"),
-];
-
 export function sortProductsBy(sort: Sort, products: Product[]): Product[] {
   let copiedList: Product[] = [];
   products.forEach((product) => copiedList.push(product));
 
   let sortedList: Product[] = [];
-
-  // if (sort === Sort.PRICE_ASCENDING) {
-  //   sortedList = sortList("Price", copiedList);
-  //   sortedList.reverse();
-  // } else if (sort === Sort.PRICE_DECENDING) {
-  //   sortedList = sortList("Price", copiedList);
-  // } else if (sort === Sort.NAME_ALPHABETIC) {
-  //   sortedList = sortList("Name", copiedList);
-  // } else if (sort === Sort.NAME_ALPHABETIC_REVERSE) {
-  //   sortedList = sortList("Name", copiedList);
-  //   sortedList.reverse();
-  // }
-
-  // return sortedList;
 
   switch (sort) {
     case Sort.PRICE_ASCENDING:
@@ -67,25 +47,6 @@ export function sortProductsBy(sort: Sort, products: Product[]): Product[] {
   return sortedList;
 }
 
-function sortList2(whichAttribute: string, products: Product[]): Product[] {
-  return products.sort((firstProduct, secondProduct) => {
-    if (whichAttribute === "Price") {
-      if (firstProduct.price < secondProduct.price) {
-        return 1;
-      } else if (firstProduct.price > secondProduct.price) {
-        return -1;
-      }
-      return 0;
-    } else {
-      if (firstProduct.name < secondProduct.name) {
-        return 1;
-      } else if (firstProduct.name > secondProduct.name) {
-        return -1;
-      }
-      return 0;
-    }
-  });
-}
 function sortList(whichAttribute: string, products: Product[]): Product[] {
   return products.sort((firstProduct, secondProduct) => {
     if (whichAttribute === "Price") {
@@ -101,11 +62,6 @@ function sortList(whichAttribute: string, products: Product[]): Product[] {
   });
 }
 
-// console.table(sortProductsBy(Sort.NAME_ALPHABETIC, frudd));
-// console.table(sortProductsBy(Sort.NAME_ALPHABETIC_REVERSE, frudd));
-// console.table(sortProductsBy(Sort.PRICE_ASCENDING, frudd));
-// console.table(sortProductsBy(Sort.PRICE_DECENDING, frudd));
-
 /*
   2. Refaktorera funktionen createProductHtml :)
   */
@@ -117,105 +73,96 @@ export let cartList = JSON.parse(localStorage.getItem("savedCartList") || "[]");
 export let productList = JSON.parse(localStorage.getItem("savedList") || "[]");
 
 export function createProductHtml() {
-  //TODO: part 1
-  let quantity = 0;
-  for (let i = 0; i < cartList.length; i++) {
-    quantity += cartList[i].quantity;
-  }
-  let floatingCart = document.getElementById(
-    "floatingcartnumber"
-  ) as HTMLElement;
-  floatingCart.innerHTML = "" + quantity;
+  updateCartNumber();
 
-  //TODO: part 2
-  for (let i = 0; i < productList.length; i++) {
-    let dogproduct: HTMLDivElement = document.createElement("div");
-    let dogImgContainer: HTMLDivElement = document.createElement("div");
-    dogImgContainer.className = "dogimgcontainer";
-    dogproduct.appendChild(dogImgContainer);
-    let dogImg: HTMLImageElement = document.createElement("img");
-
-    dogImg.src = productList[i].picture;
-    dogImg.alt = productList[i].pictureAlt;
-
-    dogImg.addEventListener("mouseover", () => {
-      cartSymbolContainer.classList.add("hover");
-      dogImg.classList.add("hover");
-    });
-
-    dogImg.addEventListener("mouseout", () => {
-      dogImg.classList.remove("hover");
-      cartSymbolContainer.classList.remove("hover");
-    });
-
-    dogImgContainer.appendChild(dogImg);
-    let cartSymbolContainer: HTMLDivElement = document.createElement("div");
-    cartSymbolContainer.className = "cartSymbolContainer";
-    dogImgContainer.appendChild(cartSymbolContainer);
-
-    let cartSymbol: HTMLElement = document.createElement("i");
-    cartSymbol.className = "bi bi-bag-plus";
-    cartSymbolContainer.appendChild(cartSymbol);
-
-    let name: HTMLHeadingElement = document.createElement("h5");
-    name.innerHTML = productList[i].name;
-    dogproduct.appendChild(name);
-
-    let price: HTMLHeadingElement = document.createElement("p");
-    price.innerHTML = "$" + productList[i].price;
-    dogproduct.appendChild(price);
-
-    let info: HTMLHeadingElement = document.createElement("p");
-    info.innerHTML = productList[i].info;
-    dogproduct.appendChild(info);
-
-    productList[i].productSpec = false;
-
-    dogImg.addEventListener("click", () => {
-      productList[i].productSpec = !productList[i].productSpec;
-      window.location.href = "product-spec.html#backArrow";
-      let listastext = JSON.stringify(productList);
-      localStorage.setItem("savedList", listastext);
-    });
-
-    cartSymbol.addEventListener("click", () => {
-      let cart = new Cart();
-      cart.addToCart(i);
-    });
-
-    // TODO: part 3
-    if (productList[i].category === "sassy") {
-      let cat1: HTMLElement = document.getElementById("sassy") as HTMLElement;
-      dogproduct.className = "dogproduct";
-      cat1.appendChild(dogproduct);
-    }
-    if (productList[i].category === "kriminella") {
-      let cat2: HTMLElement = document.getElementById(
-        "kriminella"
-      ) as HTMLElement;
-      dogproduct.className = "dogproduct";
-      cat2.appendChild(dogproduct);
-    }
-    if (productList[i].category == "singlar") {
-      let cat3: HTMLElement = document.getElementById("singlar") as HTMLElement;
-      dogproduct.className = "dogproduct";
-      cat3.appendChild(dogproduct);
-    }
-    if (productList[i].category === "puppy") {
-      let cat4: HTMLElement = document.getElementById("puppy") as HTMLElement;
-      dogproduct.className = "dogproduct";
-      cat4.appendChild(dogproduct);
-    }
-    if (productList[i].category === "oldies") {
-      let cat5: HTMLElement = document.getElementById("oldies") as HTMLElement;
-      dogproduct.className = "dogproduct";
-      cat5.appendChild(dogproduct);
-    }
-  }
+  createHtml();
 
   let listastext = JSON.stringify(productList);
   localStorage.setItem("savedList", listastext);
   sessionStorage.clear();
+
+  function createHtml() {
+    for (let i = 0; i < productList.length; i++) {
+      const dogproduct: HTMLDivElement = document.createElement("div");
+      dogproduct.className = "dogproduct";
+      dogproduct.innerHTML = `
+    <div class="dogimgcontainer">
+      <img src="${productList[i].picture}" alt="${productList[i].pictureAlt}">
+      <div class="cartSymbolContainer">
+        <i class=""bi bi-bag-plus""></i>
+      </div>
+    </div>
+    <h5>${productList[i].name}</h5>
+    <p>$${productList[i].price}</p>
+    <p>${productList[i].info}</p>
+    `;
+
+      const dogImg: HTMLDivElement = document.querySelector(
+        ".dogimgcontainer"
+      ) as HTMLDivElement;
+
+      const cartSymbol: HTMLDivElement = document.querySelector(
+        ".bi bi-bag-plus"
+      ) as HTMLDivElement;
+
+      productList[i].productSpec = false;
+
+      dogImg.addEventListener("click", () => {
+        productList[i].productSpec = !productList[i].productSpec;
+        window.location.href = "product-spec.html#backArrow";
+        let listastext = JSON.stringify(productList);
+        localStorage.setItem("savedList", listastext);
+      });
+
+      cartSymbol.addEventListener("click", () => {
+        const cart = new Cart();
+        cart.addToCart(i);
+      });
+
+      if (productList[i].category === "sassy") {
+        const cat1: HTMLElement = document.getElementById(
+          "sassy"
+        ) as HTMLElement;
+        cat1.appendChild(dogproduct);
+      }
+      if (productList[i].category === "kriminella") {
+        const cat2: HTMLElement = document.getElementById(
+          "kriminella"
+        ) as HTMLElement;
+        cat2.appendChild(dogproduct);
+      }
+      if (productList[i].category == "singlar") {
+        const cat3: HTMLElement = document.getElementById(
+          "singlar"
+        ) as HTMLElement;
+        cat3.appendChild(dogproduct);
+      }
+      if (productList[i].category === "puppy") {
+        const cat4: HTMLElement = document.getElementById(
+          "puppy"
+        ) as HTMLElement;
+        cat4.appendChild(dogproduct);
+      }
+      if (productList[i].category === "oldies") {
+        const cat5: HTMLElement = document.getElementById(
+          "oldies"
+        ) as HTMLElement;
+        cat5.appendChild(dogproduct);
+      }
+    }
+  }
+
+  function updateCartNumber() {
+    const cartTotalQuantity = cartList.reduce(
+      (total: number, item: number) => total + item,
+      0
+    );
+
+    let floatingCart = document.getElementById(
+      "floatingcartnumber"
+    ) as HTMLElement;
+    floatingCart.innerHTML = String(cartTotalQuantity);
+  }
 }
 /*
   3. Refaktorera funktionen getfromstorage
@@ -230,14 +177,8 @@ export class CartProduct {
 }
 
 function getfromstorage() {
-  let container = document.getElementById("checkout-table");
-
   let fromstorage: string = localStorage.getItem("cartArray") || "";
   let astext: CartProduct[] = JSON.parse(fromstorage);
-
-  let productcontainer = document.getElementById(
-    "product-ckeckout-container"
-  ) as HTMLDivElement;
 
   let amountcontainer = document.getElementById(
     "amount-checkout-container2"
@@ -249,7 +190,7 @@ function getfromstorage() {
   let titlecontainer = document.getElementById(
     "title-container"
   ) as HTMLTableRowElement;
-  titlecontainer.innerHTML = "<strong>products:</strong>";
+  titlecontainer.innerHTML = `<strong>products:</strong>`;
 
   let productquantity = document.getElementById(
     "product-quantity"
@@ -265,46 +206,42 @@ function getfromstorage() {
   checkkouttotal2.appendChild(totaltext);
   totaltext.innerHTML = "total:";
 
-  for (let i: number = 0; i < astext.length; i++) {
-    let productt: HTMLTableCellElement = document.createElement("th");
-    titlecontainer.appendChild(productt);
-    productt.innerHTML = astext[i].name;
-    productt.className = "hej";
+  renderProductHtml();
 
-    let amountt: HTMLTableCellElement = document.createElement("th");
-    amountcontainer.appendChild(amountt);
-    amountt.innerHTML = "x" + astext[i].amount;
-    amountt.className = "hej";
+  renderAmountContainer();
 
-    let amountqt: HTMLTableCellElement = document.createElement("th");
-    productquantity.appendChild(amountqt);
-    let amountplusbtn: HTMLButtonElement = document.createElement("button");
-    amountqt.appendChild(amountplusbtn);
-    amountqt.className = "hej";
+  function renderAmountContainer() {
+    let addition: number = astext.reduce(
+      (sum, item) => sum + item.price * item.amount,
+      0
+    );
 
-    let icon: HTMLSpanElement = document.createElement("i");
-    amountplusbtn.appendChild(icon);
-
-    icon.className = "fas fa-minus";
-    amountplusbtn.className = "plusbtn";
-
-    let icon2: HTMLSpanElement = document.createElement("i");
-    icon2.className = "fas fa-plus";
-
-    let amountminusbtn: HTMLButtonElement = document.createElement("button");
-    amountqt.appendChild(amountminusbtn);
-    amountminusbtn.appendChild(icon2);
-    amountminusbtn.className = "minusbtn";
+    let totalprice2 = document.createElement("th");
+    checkkouttotal2.appendChild(totalprice2);
+    totalprice2.innerHTML = `${addition}$`;
+    totalprice2.id = "totalincenter";
   }
 
-  let addition: number = 0;
+  function renderProductHtml() {
+    for (let i: number = 0; i < astext.length; i++) {
+      titlecontainer.innerHTML = `
+        <th class="hej">${astext[i].name}</th>
+        `;
 
-  for (let i = 0; i < astext.length; i++) {
-    addition += astext[i].price *= astext[i].amount;
+      amountcontainer.innerHTML = `
+        <th class="hej">x${astext[i].amount}</th>
+        `;
+
+      productquantity.innerHTML = `
+        <th class="hej">
+          <button class="plusbtn">
+            <i class="fas fa-minus"></i>
+          </button   
+          <button class="minusbtn">
+            <i class="fas fa-plus"></i>       
+          </button>   
+        </th>
+        `;
+    }
   }
-
-  let totalprice2: HTMLTableCellElement = document.createElement("th");
-  checkkouttotal2.appendChild(totalprice2);
-  totalprice2.innerHTML = addition + "$";
-  totalprice2.id = "totalincenter";
 }
