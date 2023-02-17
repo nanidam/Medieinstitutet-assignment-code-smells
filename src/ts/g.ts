@@ -34,46 +34,9 @@ function getStudentStatus(student: Student): string {
   Det finns flera code smells att identifiera här. Vissa är lurigare än andra.
   */
 
-class Temp {
-  constructor(public q: string, public where: Date, public v: number) {}
-}
-
-// function averageWeeklyTemperature(heights: Temp[]) {
-//   let r = 0;
-
-//   for (let who = 0; who < heights.length; who++) {
-//     if (heights[who].q === "Stockholm") {
-//       if (heights[who].where.getTime() > Date.now() - 604800000) {
-//         r += heights[who].v;
-//       }
-//     }
-//   }
-
-//   return r / 7;
-// }
-
 class Temperature {
   constructor(public place: string, public date: Date, public value: number) {}
 }
-
-// function averageWeeklyTemperature(temperatures: Temperature[]) {
-//   let result = 0;
-//   const ONE_WEEK_IN_MILLISECONDS = 604800000;
-//   const DAYS_IN_WEEK = 7;
-
-//   for (let i = 0; i < temperatures.length; i++) {
-//     if (temperatures[i].place === "Stockholm") {
-//       if (
-//         temperatures[i].date.getTime() >
-//         Date.now() - ONE_WEEK_IN_MILLISECONDS
-//       ) {
-//         result += temperatures[i].value;
-//       }
-//     }
-//   }
-
-//   return result / DAYS_IN_WEEK;
-// }
 
 function averageWeeklyTemperature(temperatures: Temperature[]) {
   const ONE_WEEK_IN_MILLISECONDS = 604800000;
@@ -92,18 +55,6 @@ function averageWeeklyTemperature(temperatures: Temperature[]) {
 
   return sumOfTemperatures / DAYS_IN_WEEK;
 }
-
-const test = [
-  new Temperature("Stockholm", new Date(2023, 1, 13), 5),
-  new Temperature("Stockholm", new Date(2023, 1, 14), 10),
-  new Temperature("Stockholm", new Date(2023, 1, 15), 15),
-  new Temperature("Stockholm", new Date(2023, 1, 16), 20),
-  new Temperature("Stockholm", new Date(2023, 1, 17), 25),
-  new Temperature("Stockholm", new Date(2023, 1, 18), 30),
-  new Temperature("Stockholm", new Date(2023, 1, 19), 35),
-];
-
-// console.log(averageWeeklyTemperature(test)); // Output: 20
 
 /*
   4. Följande funktion kommer att presentera ett objekt i dom:en. 
