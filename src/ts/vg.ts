@@ -167,7 +167,7 @@ export function createProductHtml() {
   }
 }
 /*
-  3. Refaktorera funktionen getfromstorage
+  3. Refaktorera funktionen getfromstorage. 
   */
 export class CartProduct {
   constructor(
