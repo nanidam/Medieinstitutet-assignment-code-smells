@@ -49,9 +49,9 @@ export function sortProductsBy(sort: Sort, products: Product[]): Product[] {
 }
 
 function sortList(whichAttribute: string, products: Product[]): Product[] {
-  const descendingOrder = -1;
-  const ascendingOrder = 1;
-  const defaultORder = 0;
+  const descendingOrder: number = -1;
+  const ascendingOrder: number = 1;
+  const defaultORder: number = 0;
 
   return products.sort((firstProduct, secondProduct) => {
     if (whichAttribute === "Price") {

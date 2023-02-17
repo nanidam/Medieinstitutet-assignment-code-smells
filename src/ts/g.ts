@@ -40,8 +40,8 @@ class Temperature {
 }
 
 function averageWeeklyTemperature(temperatures: Temperature[]) {
-  const oneWeekInMillisseconds = 604800000;
-  const daysInOneWeek = 7;
+  const oneWeekInMillisseconds: number = 604800000;
+  const daysInOneWeek: number = 7;
 
   const stockholmTemperatures = temperatures.filter(
     (temp) =>
@@ -74,7 +74,7 @@ class Product {
 }
 
 function showProduct(product: Product) {
-  const container = document.createElement("div");
+  const container: HTMLDivElement = document.createElement("div");
   container.innerHTML = `
     <div>
       <h4>${product.name}</h4>
@@ -129,7 +129,7 @@ function presentStudents(students: Student[]) {
   Exemplet under löser problemet, men inte speciellt bra. Hur kan man göra istället?
   */
 
-const concatenateStrings = () =>
+const concatenateStrings = (): string =>
   ["Lorem", "ipsum", "dolor", "sit", "amet"].join("");
 
 /* 
