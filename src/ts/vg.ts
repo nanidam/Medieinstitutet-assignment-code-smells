@@ -1,6 +1,7 @@
 /*
 1. Se om du kan hitta problem med koden nedan och se om du kan göra den bättre.
 */
+
 export enum Sort {
   PRICE_ASCENDING = "Stigande pris",
   PRICE_DECENDING = "Sjunkande pris",
