@@ -29,6 +29,7 @@ function getStudentStatus(student: Student): string {
   }
   return "IG";
 }
+
 /*
   3. Variabelnamn är viktiga. Kika igenom följande kod och gör om och rätt.
   Det finns flera code smells att identifiera här. Vissa är lurigare än andra.
@@ -40,7 +41,7 @@ class Temperature {
 
 function averageWeeklyTemperature(temperatures: Temperature[]) {
   const oneWeekInMillisseconds = 604800000;
-  const daysInWeek = 7;
+  const daysInOneWeek = 7;
 
   const stockholmTemperatures = temperatures.filter(
     (temp) =>
@@ -53,7 +54,7 @@ function averageWeeklyTemperature(temperatures: Temperature[]) {
     0
   );
 
-  return sumOfTemperatures / daysInWeek;
+  return sumOfTemperatures / daysInOneWeek;
 }
 
 /*
@@ -72,7 +73,7 @@ class Product {
   ) {}
 }
 
-function showProduct1(product: Product) {
+function showProduct(product: Product) {
   const container = document.createElement("div");
   container.innerHTML = `
     <div>
@@ -89,31 +90,8 @@ function showProduct1(product: Product) {
   5. Följande funktion kommer presentera studenter. Men det finns ett antal saker som 
   går att göra betydligt bättre. Gör om så många som du kan hitta!
   */
+
 function presentStudents(students: Student[]) {
-  for (const student of students) {
-    if (student.handedInOnTime) {
-      let container = document.createElement("div");
-      let checkbox = document.createElement("input");
-      checkbox.type = "checkbox";
-      checkbox.checked = true;
-
-      let listOfStudents = document.querySelector("ul#passedstudents");
-      container.appendChild(checkbox);
-      listOfStudents?.appendChild(container);
-    } else {
-      let container = document.createElement("div");
-      let checkbox = document.createElement("input");
-      checkbox.type = "checkbox";
-      checkbox.checked = false;
-
-      let listOfStudents = document.querySelector("ul#failedstudents");
-      container.appendChild(checkbox);
-      listOfStudents?.appendChild(container);
-    }
-  }
-}
-
-function presentStudents1(students: Student[]) {
   for (const student of students) {
     const container = document.createElement("div");
     let checkbox = document.createElement("input");
