@@ -48,17 +48,19 @@ export function sortProductsBy(sort: Sort, products: Product[]): Product[] {
 }
 
 function sortList(whichAttribute: string, products: Product[]): Product[] {
+  const DESCENDING_ORDER = -1;
+  const ASCENDING_ORDER = 1;
+  const DEFAULT_ORDER = 0;
+
   return products.sort((firstProduct, secondProduct) => {
     if (whichAttribute === "Price") {
-      if (firstProduct.price < secondProduct.price) return 1;
-      if (firstProduct.price > secondProduct.price) return -1;
-
-      return 0;
+      if (firstProduct.price < secondProduct.price) return DESCENDING_ORDER;
+      if (firstProduct.price > secondProduct.price) return ASCENDING_ORDER;
+      return DEFAULT_ORDER;
     }
-    if (firstProduct.name < secondProduct.name) return 1;
-    if (firstProduct.name > secondProduct.name) return -1;
-
-    return 0;
+    if (firstProduct.name < secondProduct.name) return DESCENDING_ORDER;
+    if (firstProduct.name > secondProduct.name) return ASCENDING_ORDER;
+    return DEFAULT_ORDER;
   });
 }
 
