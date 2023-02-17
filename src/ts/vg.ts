@@ -51,17 +51,17 @@ export function sortProductsBy(sort: Sort, products: Product[]): Product[] {
 function sortList(whichAttribute: string, products: Product[]): Product[] {
   const descendingOrder: number = -1;
   const ascendingOrder: number = 1;
-  const defaultORder: number = 0;
+  const defaultOrder: number = 0;
 
   return products.sort((firstProduct, secondProduct) => {
     if (whichAttribute === "Price") {
       if (firstProduct.price < secondProduct.price) return descendingOrder;
       if (firstProduct.price > secondProduct.price) return ascendingOrder;
-      return defaultORder;
+      return defaultOrder;
     }
     if (firstProduct.name < secondProduct.name) return descendingOrder;
     if (firstProduct.name > secondProduct.name) return ascendingOrder;
-    return defaultORder;
+    return defaultOrder;
   });
 }
 
