@@ -48,24 +48,24 @@ export function sortProductsBy(sort: Sort, products: Product[]): Product[] {
 }
 
 function sortList(whichAttribute: string, products: Product[]): Product[] {
-  const DESCENDING_ORDER = -1;
-  const ASCENDING_ORDER = 1;
-  const DEFAULT_ORDER = 0;
+  const descendingOrder = -1;
+  const ascendingOrder = 1;
+  const defaultORder = 0;
 
   return products.sort((firstProduct, secondProduct) => {
     if (whichAttribute === "Price") {
-      if (firstProduct.price < secondProduct.price) return DESCENDING_ORDER;
-      if (firstProduct.price > secondProduct.price) return ASCENDING_ORDER;
-      return DEFAULT_ORDER;
+      if (firstProduct.price < secondProduct.price) return descendingOrder;
+      if (firstProduct.price > secondProduct.price) return ascendingOrder;
+      return defaultORder;
     }
-    if (firstProduct.name < secondProduct.name) return DESCENDING_ORDER;
-    if (firstProduct.name > secondProduct.name) return ASCENDING_ORDER;
-    return DEFAULT_ORDER;
+    if (firstProduct.name < secondProduct.name) return descendingOrder;
+    if (firstProduct.name > secondProduct.name) return ascendingOrder;
+    return defaultORder;
   });
 }
 
 /*
-  2. Refaktorera funktionen createProductHtml :)
+  2. Refaktorera funktionen createProductHtml :) omg...
   */
 
 class Cart {
