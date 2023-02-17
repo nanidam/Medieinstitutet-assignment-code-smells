@@ -39,13 +39,13 @@ class Temperature {
 }
 
 function averageWeeklyTemperature(temperatures: Temperature[]) {
-  const ONE_WEEK_IN_MILLISECONDS = 604800000;
-  const DAYS_IN_WEEK = 7;
+  const oneWeekInMillisseconds = 604800000;
+  const daysInWeek = 7;
 
   const stockholmTemperatures = temperatures.filter(
     (temp) =>
       temp.place === "Stockholm" &&
-      temp.date.getTime() > Date.now() - ONE_WEEK_IN_MILLISECONDS
+      temp.date.getTime() > Date.now() - oneWeekInMillisseconds
   );
 
   const sumOfTemperatures = stockholmTemperatures.reduce(
@@ -53,7 +53,7 @@ function averageWeeklyTemperature(temperatures: Temperature[]) {
     0
   );
 
-  return sumOfTemperatures / DAYS_IN_WEEK;
+  return sumOfTemperatures / daysInWeek;
 }
 
 /*
@@ -162,12 +162,12 @@ const concatenateStrings = () =>
 */
 
 function createUser(user: IUser) {
-  const EPOCH_YEAR: number = 1970;
+  const epochYear: number = 1970;
 
   // Validation
   let ageDiffInMilliseconds = Date.now() - user.birthday.getTime();
   let ageDate = new Date(ageDiffInMilliseconds);
-  let userAgeInYears = Math.abs(ageDate.getUTCFullYear() - EPOCH_YEAR);
+  let userAgeInYears = Math.abs(ageDate.getUTCFullYear() - epochYear);
 
   console.log(userAgeInYears);
 
