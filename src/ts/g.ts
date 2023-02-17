@@ -4,6 +4,8 @@
   dessa hopplängder.
   */
 
+import { IUser } from "./models/IUser";
+
 const getLength = (jumpings: number[]): number =>
   jumpings.reduce(
     (jumpDistanceSoFar, currentJump) => jumpDistanceSoFar + currentJump
@@ -139,21 +141,21 @@ function showProduct1(product: Product) {
 function presentStudents(students: Student[]) {
   for (const student of students) {
     if (student.handedInOnTime) {
-      let listOfStudents = document.querySelector("ul#passedstudents");
       let container = document.createElement("div");
       let checkbox = document.createElement("input");
       checkbox.type = "checkbox";
       checkbox.checked = true;
 
+      let listOfStudents = document.querySelector("ul#passedstudents");
       container.appendChild(checkbox);
       listOfStudents?.appendChild(container);
     } else {
-      let listOfStudents = document.querySelector("ul#failedstudents");
       let container = document.createElement("div");
       let checkbox = document.createElement("input");
       checkbox.type = "checkbox";
       checkbox.checked = false;
 
+      let listOfStudents = document.querySelector("ul#failedstudents");
       container.appendChild(checkbox);
       listOfStudents?.appendChild(container);
     }
@@ -162,9 +164,10 @@ function presentStudents(students: Student[]) {
 
 function presentStudents1(students: Student[]) {
   for (const student of students) {
-    let container = document.createElement("div");
+    const container = document.createElement("div");
     let checkbox = document.createElement("input");
     checkbox.type = "checkbox";
+    checkbox.checked = false;
 
     if (student.handedInOnTime) {
       let listOfStudents = document.querySelector("ul#passedstudents");
@@ -173,13 +176,35 @@ function presentStudents1(students: Student[]) {
       listOfStudents?.appendChild(container);
     } else {
       let listOfStudents = document.querySelector("ul#failedstudents");
-      checkbox.checked = false;
       container.appendChild(checkbox);
       listOfStudents?.appendChild(container);
     }
   }
 }
 
+function presentStudents3(students: Student[]) {
+  for (const student of students) {
+    const container = document.createElement("div");
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.checked = student.handedInOnTime;
+
+    const listOfStudents = student.handedInOnTime
+      ? document.querySelector("ul#passedstudents")
+      : document.querySelector("ul#failedstudents");
+
+    container.appendChild(checkbox);
+    listOfStudents?.appendChild(container);
+    console.log(listOfStudents);
+  }
+}
+
+const frudds = [
+  new Student("frudd", true, true),
+  new Student("frudd", false, true),
+  new Student("frudd", true, true),
+];
+console.log(presentStudents3(frudds));
 /*
   6. Skriv en funktion som skall slå ihop följande texter på ett bra sätt:
   Lorem, ipsum, dolor, sit, amet
@@ -196,24 +221,17 @@ const concatenateStrings = () =>
     lösning som är hållbar och skalar bättre. 
 */
 
-interface IUser {
-  name: string;
-  birthday: Date;
-  email: string;
-  password: string;
-}
-
 function createUser(user: IUser) {
-  const epochYear: number = 1970;
+  const EPOCH_YEAR: number = 1970;
 
   // Validation
-  let ageDiff = Date.now() - user.birthday.getTime();
-  let ageDate = new Date(ageDiff);
-  let userAge = Math.abs(ageDate.getUTCFullYear() - epochYear);
+  let ageDiffInMilliseconds = Date.now() - user.birthday.getTime();
+  let ageDate = new Date(ageDiffInMilliseconds);
+  let userAgeInYears = Math.abs(ageDate.getUTCFullYear() - EPOCH_YEAR);
 
-  console.log(userAge);
+  console.log(userAgeInYears);
 
-  if (userAge > 20) {
+  if (userAgeInYears > 20) {
     // Logik för att skapa en användare
   }
   return "Du är under 20 år";
